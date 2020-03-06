@@ -1,0 +1,62 @@
+<resources>
+    <string name="app_name">Market</string>
+
+    <string name="action_bar_name">سوق الروضة</string>
+
+
+    <string name="user_name">الإسم</string>
+    <string name="password">الرقم السرى </string>
+    <string name="mobile_number">رقم الهاتف </string>
+    <string name="register">ابدأ</string>
+    <string name="new_user">التسجيل للجدد</string>
+    <string name="go_to_login">إذا كنت مسجَّل ! اضغت هنا لتسجيل دخول</string>
+    <string name="join">إنشاء حساب</string>
+
+    <string name="login">الدخول</string>
+    <string name="forgot_password">هل نسيت كلمة المرور؟ </string>
+    <string name="old_user">الدخول للمسجَّلين</string>
+    <string name="are_you_registered">إذا لم تسجل من قبل! اضغط هنا </string>
+
+
+    <string name="error_input">الإسم أو رقم الهاتف الذى أدخلته غير صحيح</string>
+    <string name="repeated_name">هذا الإسم مستخدم من قبل </string>
+    <string name="repeated_number">أنت بالفعل مسجل على سوق الروضة</string>
+
+
+    <string-array name="market_category">
+        <item>الرئيسية</item>
+        <item>ملابس</item>
+        <item>أراضى</item>
+        <item>ذهب</item>
+        <item>أطعمة</item>
+    </string-array>
+
+    <string name="all_goods">All Goods</string>
+
+    <string name="clothes">ملابس</string>
+    <string name="gold">ذهب</string>
+    <string name="lands">أراضى</string>
+    <string name="food">أطعمة</string>
+    <string name="main">الرئيسة</string>
+    <string name="help">مساعدة</string>
+    <string name="hopes">الأمنيات</string>
+    <string name="support">الدعم الفنى</string>
+    <string name="item_name">اسم السلعة</string>
+    <string name="item_category">نوعها</string>
+    <string name="item_price">السعر</string>
+    <string name="item_state">الحالة</string>
+    <string name="item_description">الوصف</string>
+    <string name="btn_insert">إدخال</string>
+
+
+
+
+
+    <string name="open_drawer">Open drawer</string>
+    <string name="close_drawer">Close drawer</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <string name="header_description">header background</string>
+</resources>
