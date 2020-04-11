@@ -7,12 +7,13 @@
     <string name="user_name">الإسم</string>
     <string name="password">الرقم السرى </string>
     <string name="mobile_number">رقم الهاتف </string>
-    <string name="register">ابدأ</string>
+    <string name="register">سجل</string>
     <string name="new_user">التسجيل للجدد</string>
     <string name="go_to_login">إذا كنت مسجَّل ! اضغت هنا لتسجيل دخول</string>
     <string name="join">إنشاء حساب</string>
 
     <string name="login">الدخول</string>
+    <string name="fb_login">الدخول باستخدام فيسبوك</string>
     <string name="forgot_password">هل نسيت كلمة المرور؟ </string>
     <string name="old_user">الدخول للمسجَّلين</string>
     <string name="are_you_registered">إذا لم تسجل من قبل! اضغط هنا </string>
@@ -31,7 +32,7 @@
         <item>أطعمة</item>
     </string-array>
 
-    <string name="all_goods">All Goods</string>
+    <string name="all_goods">كل شىء</string>
 
     <string name="clothes">ملابس</string>
     <string name="gold">ذهب</string>
@@ -46,17 +47,39 @@
     <string name="item_price">السعر</string>
     <string name="item_state">الحالة</string>
     <string name="item_description">الوصف</string>
-    <string name="btn_insert">إدخال</string>
-
-
-
+    <string name="btn_upload">رفع</string>
 
 
     <string name="open_drawer">Open drawer</string>
     <string name="close_drawer">Close drawer</string>
 
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
 
     <string name="header_description">header background</string>
+    <string name="fb_register">سجل بحساب فيسبوك</string>
+    <string name="email_address">العنوان</string>
+    <string name="add_phone_text">إضافة رقم هاتف</string>
+    <string name="update_info">تحديث البيانات</string>
+    <string name="information">البيانات</string>
+    <string name="upload_image">اضغط لتحميل صورة</string>
+    <string name="save_changes">حفظ التغييرات</string>
+    <string name="add_phone_button">أضف</string>
+    <string name="verify_phone">تأكيد</string>
+    <string name="resend_code">إعادة إرسال</string>
+    <string name="sign_out">خروج</string>
+    <string name="add_photo">اضغط لإضافة صورة من فضلك</string>
+    <string name="upload_image_warning_message">"يجب عليك تحميل صورة للمنتج أولا "</string>
+    <string name="number_exist">هذا الرقم موجود بالفعل</string>
+    <string name="number_incorrect">من فضلك ادخل رقم صحيح</string>
+    <string name="not_verified">"هذا الحساب غير مؤكد(اضغط للتأكيد) "</string>
+    <string name="verification_sent">تم إرسال كود التأكيد.يرجى التحقق</string>
+
+
+    <string name="no_name">بلا اسم</string>
+    <string name="my_goods">معرضى</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="empty_items">لا يوجد عناصر للعرض!</string>
+    <string name="error_connection">يوجد مشكلة بالشبكة !</string>
+    <string name="delete_image">أزل الصورة</string>
 </resources>

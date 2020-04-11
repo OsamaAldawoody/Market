@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".uploadItemActivity">
+    tools:context=".activity.UploadItemActivity">
+
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -19,11 +20,20 @@
             android:layout_marginRight="32dp"
             android:layout_marginLeft="32dp"
             android:layout_marginTop="16dp"
+            android:gravity="center"
             android:background="@color/colorItem"
             android:elevation="16dp"
             android:paddingTop="32dp"
             android:paddingBottom="32dp"
             android:orientation="vertical">
+            <ProgressBar
+                android:id="@+id/progress_bar"
+                style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="32dp"
+                android:layout_marginStart="32dp"
+                android:visibility="invisible" />
             <EditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -52,51 +62,18 @@
                 android:background="@android:drawable/editbox_background"            android:layout_marginRight="32dp"
                 android:layout_marginLeft="32dp"
                 android:layout_marginTop="16dp"
-                android:inputType="text"/>
+                android:inputType="numberDecimal"/>
 
-            <Spinner
-                android:layout_width="match_parent"
+            <ImageView
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:src="@drawable/empty_image"
+                android:id="@+id/image_uploaded" />
+            <TextView
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/item_state_spinner"
-                android:background="@android:drawable/spinner_dropdown_background"
-                android:layout_marginRight="32dp"
-                android:layout_marginLeft="32dp"
-                android:layout_marginTop="16dp"/>
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:layout_marginRight="32dp"
-                android:layout_marginLeft="32dp"
-                android:layout_marginTop="16dp">
+                android:text="@string/add_photo"/>
 
-                <ImageView
-                    android:layout_width="0dp"
-                    android:layout_height="100dp"
-                    android:layout_weight="1"
-                    android:src="@drawable/empty_image"
-                    android:id="@+id/image_uploaded" />
-
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:orientation="vertical"
-                    android:layout_marginRight="32dp">
-                    <Button
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:id="@+id/file_attach"
-                        android:background="@mipmap/attach"/>
-                    <Button
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:id="@+id/camera_attach"
-                        android:background="@mipmap/camera"/>
-                </LinearLayout>
-
-
-
-            </LinearLayout>
 
             <EditText
                 android:layout_width="match_parent"
@@ -108,14 +85,15 @@
                 android:layout_marginLeft="32dp"
                 android:layout_marginTop="16dp"
                 android:gravity="top"
-                android:inputType="text"/>
+                android:lines="8"
+                android:inputType="textMultiLine"/>
 
 
             <Button
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/btn_insert"
-                android:text="@string/btn_insert"
+                android:id="@+id/btn_upload"
+                android:text="@string/btn_upload"
                 android:layout_gravity="center"
                 android:background="@android:color/background_light"
                 android:elevation="6dp"

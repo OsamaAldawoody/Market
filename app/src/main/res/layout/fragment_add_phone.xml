@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".fragment.AddPhoneFragment">
+
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/send_verification_layout"
+        android:orientation="vertical"
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true"
+        android:visibility="visible">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/phone_number"
+            android:textSize="36dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginBottom="24dp"/>
+        <LinearLayout
+            android:layout_width="350dp"
+            android:layout_height="40dp"
+            android:orientation="horizontal"
+            android:gravity="end"
+            android:layout_marginBottom="32dp">
+
+            <com.hbb20.CountryCodePicker
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:id="@+id/ccp"
+                android:layout_marginStart="16dp"
+                app:ccp_defaultNameCode="EG"
+                app:ccp_countryPreference="eg"/>
+
+            <EditText
+                android:id="@+id/phone_edit_text"
+                android:layout_width="0dp"
+                android:layout_weight="4"
+                android:inputType="phone"
+                android:layout_height="match_parent"
+                android:digits="0123456789"
+                android:hint="@string/add_phone_text"
+                android:maxLength="11" />
+        </LinearLayout>
+        <Button
+            android:id="@+id/add_number_button"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:background="@color/colorPrimaryDark"
+            android:text="@string/add_phone_button"
+            android:layout_gravity="center"
+            android:textAllCaps="false"
+            android:textColor="#ffffff" />
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/verify_phone_layout"
+        android:orientation="vertical"
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true"
+        android:visibility="gone">
+        <LinearLayout
+            android:layout_width="350dp"
+            android:layout_height="40dp"
+            android:orientation="horizontal"
+            android:gravity="end"
+            android:layout_marginBottom="32dp">
+
+
+            <EditText
+                android:id="@+id/code_verification_edit_text"
+                android:layout_width="match_parent"
+                android:inputType="phone"
+                android:layout_height="match_parent"
+                android:digits="0123456789" />
+        </LinearLayout>
+
+
+        <Button
+            android:id="@+id/verify_phone_button"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:background="@color/colorPrimaryDark"
+            android:text="@string/verify_phone"
+            android:layout_gravity="center"
+            android:textAllCaps="false"
+            android:textColor="#ffffff" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/resend"
+            android:text="@string/resend_code"
+            android:layout_gravity="center"
+            android:textSize="24dp"
+            android:visibility="invisible"/>
+
+    </LinearLayout>
+
+
+
+
+
+
+</RelativeLayout>

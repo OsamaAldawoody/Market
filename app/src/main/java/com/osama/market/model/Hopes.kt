@@ -1,4 +1,4 @@
-package com.osama.market
+package com.osama.market.model
 
 class Hopes (val userId:Int,
              val name:String,

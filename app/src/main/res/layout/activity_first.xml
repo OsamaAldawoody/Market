@@ -5,9 +5,16 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".FirstActivity">
-
+    tools:context=".activity.FirstActivity">
     <include layout="@layout/toolbar_main" android:id="@+id/toolbar"/>
+    <com.google.android.material.tabs.TabLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/tab_layout"
+        android:background="@color/colorPrimaryDark"
+        app:tabTextColor="@color/white"
+        app:tabSelectedTextColor="@color/colorItem" />
+
     <androidx.drawerlayout.widget.DrawerLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -15,7 +22,13 @@
         <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/frame_container_categories"/>
+            android:id="@+id/frame_container"/>
+
+        <androidx.viewpager.widget.ViewPager
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/view_pager"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
 
         <com.google.android.material.navigation.NavigationView
             android:layout_width="wrap_content"
@@ -26,8 +39,6 @@
             android:layout_gravity="start"
             app:menu="@menu/menu"
             app:headerLayout="@layout/nav_header"/>
-
-
     </androidx.drawerlayout.widget.DrawerLayout>
 
 
