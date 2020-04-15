@@ -12,6 +12,7 @@ import android.webkit.MimeTypeMap
 import android.widget.*
 import androidx.appcompat.widget.Toolbar
 import androidx.core.content.ContextCompat
+import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.database.DatabaseReference
@@ -42,7 +43,9 @@ class UploadItemActivity : AppCompatActivity() {
 
         setSupportActionBar(toolbar as Toolbar)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
-
+        (toolbar as Toolbar).setNavigationOnClickListener{
+            finish()
+        }
         val categories = Category.getCategories()
         val categoryAdapter = ArrayAdapter(
             this,
@@ -113,6 +116,7 @@ class UploadItemActivity : AppCompatActivity() {
                         .child(uploadId!!).setValue(newItem)
                     progress_bar.visibility = View.INVISIBLE
                     startActivity(Intent(this,FirstActivity::class.java))
+                    finish()
                 }
             }.addOnProgressListener {
                 val progress = (100.0 * it.bytesTransferred / it.totalByteCount)

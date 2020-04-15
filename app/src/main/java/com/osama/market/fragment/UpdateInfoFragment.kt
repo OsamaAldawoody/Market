@@ -18,6 +18,8 @@ import androidx.fragment.app.Fragment
 import com.bumptech.glide.Glide
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.UserProfileChangeRequest
+import com.google.firebase.database.DatabaseReference
+import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageMetadata
 import com.google.firebase.storage.StorageReference
@@ -46,6 +48,8 @@ class UpdateInfoFragment : Fragment() {
     val storageRef = FirebaseStorage.getInstance()
         .reference
         .child("pics")
+    lateinit var databaseRef: FirebaseDatabase
+    lateinit var userRef: DatabaseReference
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -60,12 +64,10 @@ class UpdateInfoFragment : Fragment() {
                 view.user_name.requestFocus()
                 return@setOnClickListener
             }
-
-
-                 photo = when{
-                    ::imageUri.isInitialized -> imageUri
-                    else -> currentUser?.photoUrl
-                }
+            photo = when {
+                ::imageUri.isInitialized -> imageUri
+                else -> currentUser?.photoUrl
+            }
 
             val updates = UserProfileChangeRequest.Builder()
                 .setDisplayName(name)
@@ -78,17 +80,20 @@ class UpdateInfoFragment : Fragment() {
                     view.progressbar.visibility = View.INVISIBLE
                     view.click_to_upload.visibility = View.INVISIBLE
                     if (task.isSuccessful) {
-                        context?.toast("Profile Updated")
-                        startActivity(Intent(activity,FirstActivity::class.java))
+                        databaseRef = FirebaseDatabase.getInstance()
+                        userRef = databaseRef.getReference("users")
+
+                        context?.toast("تم التحديث")
+                        startActivity(Intent(activity, FirstActivity::class.java))
                     } else {
                         context?.toast(task.exception?.message!!)
                     }
                 }
+            it.isClickable = false
         }
         view.delete_image.setOnClickListener {
-
             storageRef.child(currentUser?.uid!!).delete()
-                .addOnCompleteListener{
+                .addOnCompleteListener {
                     view.personal_image_to_upload.setImageResource(R.drawable.ic_image_placeholder)
                     val updates = UserProfileChangeRequest.Builder()
                         .setPhotoUri(null)
@@ -96,8 +101,6 @@ class UpdateInfoFragment : Fragment() {
                     currentUser.updateProfile(updates)
                     activity?.toast("تم ازالة الصورة")
                 }
-
-
         }
         view.personal_image_to_upload.setOnClickListener {
             openFileChooser()
@@ -109,14 +112,22 @@ class UpdateInfoFragment : Fragment() {
         val intent = Intent()
         intent.type = "image/*"
         intent.action = Intent.ACTION_GET_CONTENT
-        startActivityForResult(intent,REQUEST_IMAGE_CAPTURE)
+        startActivityForResult(intent, REQUEST_IMAGE_CAPTURE)
     }
 
-    private fun updateUi(view: View){
+    private fun updateUi(view: View) {
+
         currentUser.let {
+            val photo = it?.photoUrl
+            if (photo == null) {
+                view.personal_image_to_upload.setImageResource(R.drawable.ic_image_placeholder)
+                return@let
+            }
             Glide.with(this)
-                .load(it?.photoUrl)
+                .load(photo)
                 .into(view.personal_image_to_upload)
+            view.click_to_upload.visibility = View.GONE
+
         }
         if (currentUser?.displayName != null)
             view.user_name.setText(currentUser.displayName.toString())

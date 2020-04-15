@@ -82,4 +82,6 @@
     <string name="empty_items">لا يوجد عناصر للعرض!</string>
     <string name="error_connection">يوجد مشكلة بالشبكة !</string>
     <string name="delete_image">أزل الصورة</string>
+    <string name="chat">المحادثات</string>
+    <string name="writeMessage">اكتب رسالة ...</string>
 </resources>

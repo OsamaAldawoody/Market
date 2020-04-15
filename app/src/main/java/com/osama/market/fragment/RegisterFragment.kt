@@ -11,6 +11,7 @@ import android.widget.TextView
 import androidx.fragment.app.FragmentTransaction
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.UserProfileChangeRequest
+import com.google.firebase.database.FirebaseDatabase
 import com.osama.market.R
 import com.osama.market.login
 import com.osama.market.toast
@@ -23,6 +24,7 @@ class RegisterFragment : Fragment() {
 
     private lateinit var txtLogin: TextView
     private val auth = FirebaseAuth.getInstance()
+    private val databaseRef = FirebaseDatabase.getInstance().getReference("users")
     lateinit var email: String
     lateinit var userName: String
     lateinit var password: String
@@ -81,7 +83,7 @@ class RegisterFragment : Fragment() {
                 if (task.isSuccessful) {
                     view!!.progressbar.visibility = View.VISIBLE
                     activity!!.toast("تم تسجيلك ")
-                    setName(userName)
+                    addUserToDatabase(userName)
 
                     activity!!.login()
                 } else {
@@ -98,9 +100,27 @@ class RegisterFragment : Fragment() {
         ft?.commit()
     }
 
-    private fun setName(userName: String) {
-        auth.currentUser?.updateProfile(UserProfileChangeRequest.Builder()
-            .setDisplayName(userName)
-            .build())
+    private fun addUserToDatabase(userName: String) {
+        auth.currentUser?.updateProfile(
+            UserProfileChangeRequest.Builder()
+                .setDisplayName(userName)
+                .build()
+        )
+        databaseRef.child(auth.currentUser?.uid!!)
+            .setValue(
+                getUserInfo(
+                    userName,
+                    auth.currentUser?.email.toString(),
+                    auth.currentUser?.uid!!
+                )
+            )
+    }
+
+    private fun getUserInfo(name: String, email: String, uid: String): HashMap<String, String> {
+        val hashMap = HashMap<String, String>()
+        hashMap["name"] = name
+        hashMap["email"] = email
+        hashMap["uid"] = uid
+        return hashMap
     }
 }

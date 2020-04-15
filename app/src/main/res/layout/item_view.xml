@@ -51,7 +51,7 @@
                android:layout_width="match_parent"
                android:layout_height="match_parent"
                android:id="@+id/publisher_image"
-               android:src="@drawable/osama_custom"
+               android:src="@drawable/ic_image_placeholder"
                android:scaleType="centerCrop"
                android:contentDescription="@string/header_description"/>
            </androidx.cardview.widget.CardView>

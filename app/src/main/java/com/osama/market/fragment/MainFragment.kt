@@ -26,10 +26,10 @@ class MainFragment : Fragment() {
     ): View? {
         val view = inflater.inflate(R.layout.fragment_main, container, false)
 
-        view.all_goods.setOnClickListener {
+        view.all_goods_menu_button.setOnClickListener {
             moveToFragment(CategoryFragment(),Category.ALL_GOODS.value)
         }
-        view.my_goods.setOnClickListener {
+        view.my_goods_menu_button.setOnClickListener {
             moveToFragment(CategoryFragment(),Category.MY_GOODS.value)
         }
         view.update_info.setOnClickListener {

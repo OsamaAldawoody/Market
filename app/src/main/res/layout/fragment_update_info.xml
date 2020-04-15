@@ -28,6 +28,7 @@
             android:layout_gravity="center_horizontal"
             android:id="@+id/personal_image_to_upload"
             android:src="@drawable/ic_image_placeholder"
+            android:contentDescription="@string/upload_image"
             android:scaleType="centerCrop" />
         <TextView
             android:layout_width="wrap_content"

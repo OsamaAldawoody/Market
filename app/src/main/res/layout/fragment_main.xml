@@ -20,7 +20,7 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="64dp"
-            android:id="@+id/all_goods"
+            android:id="@+id/all_goods_menu_button"
             android:gravity="center"
             android:layout_marginStart="32dp"
             android:layout_marginEnd="32dp"
@@ -31,7 +31,7 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="64dp"
-            android:id="@+id/my_goods"
+            android:id="@+id/my_goods_menu_button"
             android:gravity="center"
             android:layout_marginStart="32dp"
             android:layout_marginEnd="32dp"

@@ -11,22 +11,24 @@ import androidx.appcompat.widget.Toolbar
 import androidx.core.view.GravityCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
-import androidx.fragment.app.FragmentPagerAdapter
 import androidx.fragment.app.FragmentTransaction
 import com.bumptech.glide.Glide
 import com.google.android.material.navigation.NavigationView
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.FirebaseUser
+import com.google.firebase.database.DatabaseReference
+import com.google.firebase.database.FirebaseDatabase
 import com.osama.market.*
 import com.osama.market.enums.Category
 import com.osama.market.fragment.*
 import kotlinx.android.synthetic.main.activity_first.*
 import kotlinx.android.synthetic.main.nav_header.view.*
 
-class FirstActivity : AppCompatActivity(),NavigationView.OnNavigationItemSelectedListener {
+class FirstActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
 
-    lateinit var header : View
-    lateinit var auth :FirebaseAuth
+    lateinit var header: View
+    lateinit var auth: FirebaseAuth
+    lateinit var databaseRef: FirebaseDatabase
+    lateinit var userRef: DatabaseReference
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_first)
@@ -38,25 +40,26 @@ class FirstActivity : AppCompatActivity(),NavigationView.OnNavigationItemSelecte
         header = nav_view.getHeaderView(0)
         header.sign_out_button.setOnClickListener {
             auth.signOut()
-            startActivity(Intent(this,MainActivity::class.java))
+            startActivity(Intent(this, MainActivity::class.java))
         }
         header.nav_header_image.setOnClickListener {
             drawer_layout.closeDrawer(GravityCompat.START)
-            moveToFragment(UpdateInfoFragment(),null)
+            moveToFragment(UpdateInfoFragment(), null)
+            removeFragment()
         }
 
-        val toggle : ActionBarDrawerToggle = object:ActionBarDrawerToggle(this,
+        val toggle: ActionBarDrawerToggle = object : ActionBarDrawerToggle(
+            this,
             drawer_layout,
             toolbar as Toolbar,
             R.string.open_drawer,
             R.string.close_drawer
-        ){
-            override fun onDrawerClosed(view: View){
+        ) {
+            override fun onDrawerClosed(view: View) {
                 super.onDrawerClosed(view)
-
             }
 
-            override fun onDrawerOpened(drawerView: View){
+            override fun onDrawerOpened(drawerView: View) {
                 super.onDrawerOpened(drawerView)
             }
         }
@@ -66,29 +69,26 @@ class FirstActivity : AppCompatActivity(),NavigationView.OnNavigationItemSelecte
         toggle.syncState()
         nav_view.setNavigationItemSelectedListener(this)
 
-        defineViewAdapterAndAddFragments()
-    }
-
-    private fun defineViewAdapterAndAddFragments(){
-        val viewAdapter = ViewPagerAdapter(supportFragmentManager)
-        viewAdapter.addFragment(MainFragment(),"الرئيسية")
-        viewAdapter.addFragment(FriendsFragment(),"الأصدقاء")
-        viewAdapter.addFragment(ChatFragment(),"المحادثات")
-        view_pager.adapter = viewAdapter
-        tab_layout.setupWithViewPager(view_pager)
+        moveToFragment(MainFragment(), null)
+        removeFragment()
     }
     override fun onStart() {
         super.onStart()
-        val user = auth.currentUser
-        if (user != null)
-        updateUi(user)
+        updateUi()
+        updateUserInfoOnServer()
     }
-
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
+
         return when (item.itemId) {
             R.id.add_item_action -> {
                 val i = Intent(this, UploadItemActivity::class.java)
                 startActivity(i)
+                removeFragment()
+                true
+            }
+            R.id.chat -> {
+                startActivity(Intent(this, FriendsChatActivity::class.java))
+                removeFragment()
                 true
             }
             else -> super.onOptionsItemSelected(item)
@@ -96,48 +96,49 @@ class FirstActivity : AppCompatActivity(),NavigationView.OnNavigationItemSelecte
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-        menuInflater.inflate(R.menu.menu,menu)
-        menu?.findItem(R.id.add_phone_number)?.isVisible = false
-        menu?.findItem(R.id.main_page)?.isVisible = false
-        menu?.findItem(R.id.clothes_page)?.isVisible = false
-        menu?.findItem(R.id.gold_page)?.isVisible = false
-        menu?.findItem(R.id.land_page)?.isVisible = false
+        menuInflater.inflate(R.menu.menu, menu)
+        menu?.findItem(R.id.add_phone_number_menu_button)?.isVisible = false
+        menu?.findItem(R.id.main_page_menu_button)?.isVisible = false
+        menu?.findItem(R.id.clothes_page_menu_button)?.isVisible = false
+        menu?.findItem(R.id.gold_page_menu_button)?.isVisible = false
+        menu?.findItem(R.id.land_page_menu_button)?.isVisible = false
         menu?.findItem(R.id.information)?.isVisible = false
         menu?.findItem(R.id.support)?.isVisible = false
-        menu?.findItem(R.id.all_goods)?.isVisible = false
-        menu?.findItem(R.id.my_goods)?.isVisible = false
+        menu?.findItem(R.id.all_goods_menu_button)?.isVisible = false
+        menu?.findItem(R.id.my_goods_menu_button)?.isVisible = false
         return true
     }
-        override fun onNavigationItemSelected(item: MenuItem): Boolean {
-            var category : String?= null
-            val fragment = when(item.itemId){
-                R.id.main_page -> MainFragment()
-                R.id.clothes_page -> {
-                    category = Category.CLOTHES.value
-                    CategoryFragment()
-                }
-                R.id.land_page -> {
-                    category = Category.LANDS.value
-                    CategoryFragment()
-                }
-                R.id.gold_page -> {
-                    category = Category.GOLD.value
-                    CategoryFragment()
-                }
-                R.id.my_goods ->{
-                    category = Category.MY_GOODS.value
-                    CategoryFragment()
-                }
-                R.id.all_goods ->{
-                    category = Category.ALL_GOODS.value
-                    CategoryFragment()
-                }
-                R.id.update_general_info -> UpdateInfoFragment()
-                R.id.add_phone_number -> AddPhoneFragment()
-                else -> MainFragment()
+
+    override fun onNavigationItemSelected(item: MenuItem): Boolean {
+        var category: String? = null
+        val fragment = when (item.itemId) {
+            R.id.main_page_menu_button -> MainFragment()
+            R.id.clothes_page_menu_button -> {
+                category= Category.CLOTHES.value
+                CategoryFragment()
+            }
+            R.id.land_page_menu_button -> {
+                category = Category.LANDS.value
+                CategoryFragment()
+            }
+            R.id.gold_page_menu_button -> {
+                category = Category.GOLD.value
+                CategoryFragment()
+            }
+            R.id.my_goods_menu_button -> {
+                category = Category.MY_GOODS.value
+                CategoryFragment()
+            }
+            R.id.all_goods_menu_button -> {
+                category = Category.ALL_GOODS.value
+                CategoryFragment()
+            }
+            R.id.update_general_info_menu_button -> UpdateInfoFragment()
+            R.id.add_phone_number_menu_button -> AddPhoneFragment()
+            else -> MainFragment()
         }
         drawer_layout.closeDrawer(GravityCompat.START)
-        moveToFragment(fragment,category)
+        moveToFragment(fragment, category)
         return true
     }
 
@@ -148,55 +149,66 @@ class FirstActivity : AppCompatActivity(),NavigationView.OnNavigationItemSelecte
             super.onBackPressed()
         }
     }
-    private fun updateUi(currentUser:FirebaseUser?){
-        currentUser.let {
-            if (it?.photoUrl == null)
-                header.header_image_view.setImageResource(R.drawable.ic_image_placeholder)
-            else{
-                Glide.with(this)
-                    .load(it.photoUrl)
-                    .into(header.header_image_view)
-                }
-        }
-        header.header_name.text = currentUser?.displayName
-        header.header_address.text = currentUser?.email
 
+    private fun removeFragment(){
+        MainFragment()
+        val ft = supportFragmentManager.beginTransaction()
+        ft.remove(CategoryFragment())
+        ft.commit()
     }
-    private fun moveToFragment(fragment:Fragment, category: String?){
+    private fun updateUi() {
+        val user = auth.currentUser
+        if (user != null){
+            user.let {
+                if (it.photoUrl == null)
+                    header.header_image_view.setImageResource(R.drawable.ic_image_placeholder)
+                else {
+                    Glide.with(this)
+                        .load(it.photoUrl)
+                        .into(header.header_image_view)
+                }
+            }
+            header.header_name.text = user.displayName
+            header.header_address.text = user.email
+        }
+    }
+    private fun updateUserInfoOnServer(){
+        databaseRef = FirebaseDatabase.getInstance()
+        userRef = databaseRef.getReference("users")
+        val hashMap = getUserInfoHashMap(
+            auth.currentUser?.displayName!!,
+            auth.currentUser?.email!!,
+            auth.currentUser?.photoUrl.toString(),
+            auth.currentUser?.uid!!
+        )
+        userRef.child(auth.currentUser!!.uid).setValue(hashMap)
+    }
+    private fun getUserInfoHashMap(
+        name: String,
+        email: String,
+        photoUrl: String,
+        uid: String
+    ): HashMap<String, String> {
+        val hashMap = HashMap<String, String>()
+        hashMap["name"] = name
+        hashMap["email"] = email
+        hashMap["photoUrl"] = photoUrl
+        hashMap["uid"] = uid
+        return hashMap
+    }
+    private fun moveToFragment(fragment: Fragment, category: String?) {
         val ft = supportFragmentManager.beginTransaction()
         val bundle = Bundle()
-        bundle.putString("category",category)
+        bundle.putString("category", category)
         fragment.arguments = bundle
-        ft.replace(R.id.frame_container,fragment)
+        ft.replace(R.id.frame_container, fragment)
         ft.addToBackStack(null)
         ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
         ft.commit()
     }
 
-    class ViewPagerAdapter(fragmentManager: FragmentManager) :
-        FragmentPagerAdapter(fragmentManager,FragmentPagerAdapter.BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT) {
-        var fragments = ArrayList<Fragment>()
-        var titles = ArrayList<String>()
-
-        init {
-            this.fragments = ArrayList()
-            this.titles = ArrayList()
-        }
-        override fun getItem(position: Int): Fragment {
-            return fragments[position]
-        }
-
-        override fun getCount(): Int {
-            return fragments.size
-        }
-
-        override fun getPageTitle(position: Int): CharSequence? {
-            return titles[position]
-        }
-
-        fun addFragment(fragment: Fragment,title:String){
-            this.fragments.add(fragment)
-            this.titles.add(title)
-        }
+    override fun onResume() {
+        super.onResume()
+        moveToFragment(MainFragment(),null)
     }
 }
