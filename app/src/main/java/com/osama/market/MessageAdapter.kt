@@ -23,12 +23,12 @@ class MessageAdapter (val messageList:ArrayList<Chat>, val context: Context, val
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        if (viewType == MSG_TYPE_LEFT){
-            return ViewHolder(
+        return if (viewType == MSG_TYPE_LEFT){
+            ViewHolder(
                 LayoutInflater.from(context).inflate(R.layout.chat_item_left, parent, false)
             )
         }else{
-            return ViewHolder(
+            ViewHolder(
                 LayoutInflater.from(context).inflate(R.layout.chat_item_right, parent, false)
             )
         }
@@ -49,10 +49,10 @@ class MessageAdapter (val messageList:ArrayList<Chat>, val context: Context, val
     }
 
     override fun getItemViewType(position: Int): Int {
-        if (fUser.currentUser?.uid == messageList[position].sender)
-            return MSG_TYPE_RIGHT
+        return if (fUser.currentUser?.uid == messageList[position].sender)
+            MSG_TYPE_RIGHT
         else
-            return MSG_TYPE_LEFT
+            MSG_TYPE_LEFT
     }
 
 }

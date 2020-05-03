@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="wrap_content"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:gravity="center_vertical">
 
     <com.mikhaellopez.circularimageview.CircularImageView
         android:layout_width="64dp"
@@ -10,27 +11,17 @@
         android:src="@drawable/ic_image_placeholder"
         android:layout_alignParentEnd="true"
         android:layout_margin="8dp"/>
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:layout_toStartOf="@id/user_image"
-        android:layout_alignTop="@id/user_image"
-        android:gravity="end">
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/user_name"
             android:text="name"
             android:textSize="24sp"
-            android:textStyle="bold"/>
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/last_message"
-            android:text="مرحبا"
-            android:textSize="20sp" />
-    </LinearLayout>
+            android:textStyle="bold"
+            android:layout_centerInParent="true"
+            android:layout_toStartOf="@+id/user_image" />
+
 
 
 </RelativeLayout>

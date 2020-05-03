@@ -45,7 +45,6 @@ class FirstActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelect
         header.nav_header_image.setOnClickListener {
             drawer_layout.closeDrawer(GravityCompat.START)
             moveToFragment(UpdateInfoFragment(), null)
-            removeFragment()
         }
 
         val toggle: ActionBarDrawerToggle = object : ActionBarDrawerToggle(
@@ -70,7 +69,6 @@ class FirstActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelect
         nav_view.setNavigationItemSelectedListener(this)
 
         moveToFragment(MainFragment(), null)
-        removeFragment()
     }
     override fun onStart() {
         super.onStart()
@@ -83,12 +81,10 @@ class FirstActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelect
             R.id.add_item_action -> {
                 val i = Intent(this, UploadItemActivity::class.java)
                 startActivity(i)
-                removeFragment()
                 true
             }
             R.id.chat -> {
                 startActivity(Intent(this, FriendsChatActivity::class.java))
-                removeFragment()
                 true
             }
             else -> super.onOptionsItemSelected(item)
@@ -114,7 +110,7 @@ class FirstActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelect
         val fragment = when (item.itemId) {
             R.id.main_page_menu_button -> MainFragment()
             R.id.clothes_page_menu_button -> {
-                category= Category.CLOTHES.value
+                category = Category.CLOTHES.value
                 CategoryFragment()
             }
             R.id.land_page_menu_button -> {
@@ -150,12 +146,7 @@ class FirstActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelect
         }
     }
 
-    private fun removeFragment(){
-        MainFragment()
-        val ft = supportFragmentManager.beginTransaction()
-        ft.remove(CategoryFragment())
-        ft.commit()
-    }
+
     private fun updateUi() {
         val user = auth.currentUser
         if (user != null){
@@ -197,6 +188,7 @@ class FirstActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelect
         return hashMap
     }
     private fun moveToFragment(fragment: Fragment, category: String?) {
+
         val ft = supportFragmentManager.beginTransaction()
         val bundle = Bundle()
         bundle.putString("category", category)
@@ -207,8 +199,4 @@ class FirstActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelect
         ft.commit()
     }
 
-    override fun onResume() {
-        super.onResume()
-        moveToFragment(MainFragment(),null)
-    }
 }

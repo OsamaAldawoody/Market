@@ -70,7 +70,6 @@ class MainFragment : Fragment() {
         ft?.addToBackStack(null)
         ft?.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
         ft?.commit()
-
     }
 
 }

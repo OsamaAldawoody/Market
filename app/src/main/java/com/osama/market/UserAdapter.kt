@@ -19,7 +19,7 @@ class UserAdapter(val userList:ArrayList<User>, val context: Context): RecyclerV
     class ViewHolder (view: View): RecyclerView.ViewHolder(view) {
         val userImage = view.findViewById<ImageView>(R.id.user_image)
         val userName = view.findViewById<TextView>(R.id.user_name)
-        val lastMessage = view.findViewById<TextView>(R.id.last_message)
+
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {

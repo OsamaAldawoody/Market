@@ -26,10 +26,6 @@
         android:layout_marginTop="@dimen/edit_text_margin"
         android:gravity="start"/>
 
-
-
-
-
     <EditText
         android:id="@+id/password"
         android:layout_height="wrap_content"
@@ -40,7 +36,7 @@
         android:layout_marginLeft="@dimen/edit_text_margin"
         android:layout_marginRight="@dimen/edit_text_margin"
         android:layout_marginTop="@dimen/edit_text_margin"
-        android:gravity="end"/>
+        android:gravity="start"/>
 
     <ProgressBar
         android:visibility="invisible"

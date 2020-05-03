@@ -26,6 +26,7 @@ import com.osama.market.model.Item
 import com.osama.market.toast
 import kotlinx.android.synthetic.main.activity_upload_item.*
 import kotlinx.android.synthetic.main.item_view.*
+import java.util.*
 
 
 class UploadItemActivity : AppCompatActivity() {
@@ -36,6 +37,7 @@ class UploadItemActivity : AppCompatActivity() {
     lateinit var uploadTask : StorageTask<UploadTask.TaskSnapshot>
     var databaseRef : DatabaseReference =  FirebaseDatabase.getInstance().getReference("Items")
     var storageRef : FirebaseStorage = FirebaseStorage.getInstance()
+    val auth = FirebaseAuth.getInstance()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -108,8 +110,8 @@ class UploadItemActivity : AppCompatActivity() {
                         item_category_spinner.selectedItem.toString(),
                         item_price_edit_text.text.toString().toDouble(),
                         item_description_edit_text.text.toString(),
-                        System.currentTimeMillis().toString(),
-                        it.toString())
+                        Date().toString(),
+                        it.toString(),"","","",auth.currentUser?.uid!!)
                     val uploadId = databaseRef.push().key
                     databaseRef
                         .child(item_category_spinner.selectedItem.toString())
